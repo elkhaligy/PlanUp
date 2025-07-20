@@ -1,4 +1,93 @@
-<div>
-  <h1 class="font-bold text-4xl">Tasks#new</h1>
-  <p>Find me in app/views/tasks/new.html.erb</p>
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-2xl mx-auto">
+    <div class="flex items-center mb-6">
+      <%= link_to tasks_path, class: 'btn btn-ghost btn-sm mr-4' do %>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Back to Tasks
+      <% end %>
+      <h1 class="text-3xl font-bold">Add New Task</h1>
+    </div>
+
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <%= form_with model: @task, local: true, class: "space-y-6" do |form| %>
+          <% if @task.errors.any? %>
+            <div class="alert alert-error shadow-lg">
+              <div>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+                <div>
+                  <h3 class="font-bold">Please fix the following errors:</h3>
+                  <ul class="list-disc list-inside">
+                    <% @task.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <!-- Title Field -->
+          <div class="form-control">
+            <%= form.label :title, class: "label" do %>
+              <span class="label-text font-semibold">Task Title *</span>
+            <% end %>
+            <%= form.text_field :title, 
+                class: "input input-bordered w-full #{'input-error' if @task.errors[:title].any?}",
+                placeholder: "Enter task title..." %>
+            <% if @task.errors[:title].any? %>
+              <label class="label">
+                <span class="label-text-alt text-error"><%= @task.errors[:title].first %></span>
+              </label>
+            <% end %>
+          </div>
+
+          <!-- Description Field -->
+          <div class="form-control">
+            <%= form.label :description, class: "label" do %>
+              <span class="label-text font-semibold">Description</span>
+            <% end %>
+            <%= form.text_area :description, 
+                class: "textarea textarea-bordered h-24",
+                placeholder: "Add more details about this task..." %>
+          </div>
+
+          <!-- Priority Field -->
+          <div class="form-control">
+            <%= form.label :priority, class: "label" do %>
+              <span class="label-text font-semibold">Priority</span>
+            <% end %>
+            <%= form.select :priority, 
+                options_for_select([
+                  ['High', 'High'],
+                  ['Medium', 'Medium'],
+                  ['Low', 'Low']
+                ], @task.priority),
+                { prompt: 'Select priority...' },
+                { class: "select select-bordered w-full" } %>
+          </div>
+
+          <!-- Due Date Field -->
+          <div class="form-control">
+            <%= form.label :due_date, class: "label" do %>
+              <span class="label-text font-semibold">Due Date</span>
+            <% end %>
+            <%= form.date_field :due_date, 
+                class: "input input-bordered w-full",
+                min: Date.current %>
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="flex gap-4 pt-4">
+            <%= form.submit "Create Task", class: "btn btn-primary flex-1" %>
+            <%= link_to "Cancel", tasks_path, class: "btn btn-outline flex-1" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,7 +1,7 @@
-<div class="container mx-auto px-15 py-20">
+<div class="container mx-auto px-4 py-8">
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-3xl font-bold">Your Tasks</h1>
-    <%= link_to 'New Task', new_task_path, class: 'btn btn-primary' %>
+    <button class="btn btn-primary" onclick="new_task_modal.showModal()">New Task</button>
   </div>
 
   <% if @tasks.any? %>
@@ -32,7 +32,7 @@
             </div>
             <div class="card-actions justify-end gap-2">
               <% unless task.completed? %>
-                <%= button_to 'Mark Complete', task_path(task, task: { completed: true}), method: :patch, class: 'btn btn-success btn-sm' %>
+                <%= button_to 'Mark Complete', task_path(task, task: { completed: true }), method: :patch, class: 'btn btn-success btn-sm' %>
               <% else %>
                 <%= button_to 'Mark Incomplete', task_path(task, task: { completed: false }), method: :patch, class: 'btn btn-warning btn-sm' %>
               <% end %>
@@ -51,3 +51,101 @@
     </div>
   <% end %>
 </div>
+
+<!-- New Task Modal -->
+<dialog id="new_task_modal" class="modal">
+  <div class="modal-box w-11/12 max-w-2xl relative">
+    <h3 class="font-bold text-lg mb-4">Add New Task</h3>
+    
+    <%= form_with model: @task || Task.new, local: true, class: "space-y-4" do |form| %>
+      <% if (@task&.errors&.any?) %>
+        <div class="alert alert-error shadow-lg">
+          <div>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+            </svg>
+            <div>
+              <h3 class="font-bold">Please fix the following errors:</h3>
+              <ul class="list-disc list-inside">
+                <% @task.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      
+      <!-- Title Field -->
+      <div class="form-control">
+        <%= form.label :title, class: "label" do %>
+          <span class="label-text font-semibold">Task Title *</span>
+        <% end %>
+        <%= form.text_field :title, 
+            class: "input input-bordered w-full #{'input-error' if @task&.errors&.dig(:title)&.any?}",
+            placeholder: "Enter task title...",
+            required: true %>
+        <% if @task&.errors&.dig(:title)&.any? %>
+          <label class="label">
+            <span class="label-text-alt text-error"><%= @task.errors[:title].first %></span>
+          </label>
+        <% end %>
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-control">
+        <%= form.label :description, class: "label" do %>
+          <span class="label-text font-semibold">Description</span>
+        <% end %>
+        <%= form.text_area :description, 
+            class: "textarea textarea-bordered h-10 w-full",
+            placeholder: "Add more details about this task..." %>
+      </div>
+
+      <!-- Priority Field -->
+      <div class="form-control">
+        <%= form.label :priority, class: "label" do %>
+          <span class="label-text font-semibold">Priority</span>
+        <% end %>
+        <%= form.select :priority, 
+            options_for_select([
+              ['High', 'High'],
+              ['Medium', 'Medium'],
+              ['Low', 'Low']
+            ], 'Medium'),
+            { prompt: 'Select priority...' },
+            { class: "select select-bordered w-full" } %>
+      </div>
+
+      <!-- Due Date Field -->
+      <div class="form-control">
+        <%= form.label :due_date, class: "label" do %>
+          <span class="label-text font-semibold">Due Date</span>
+        <% end %>
+        <%= form.date_field :due_date, 
+            class: "input input-bordered w-full",
+            min: Date.current %>
+      </div>
+
+      <!-- Modal Actions -->
+      <div class="modal-action">
+        <button type="button" class="btn" onclick="new_task_modal.close()">Cancel</button>
+        <%= form.submit "Create Task", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <!-- Modal backdrop -->
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<script>
+  // Auto-open modal if there are validation errors
+  <% if @task&.errors&.any? %>
+    document.addEventListener('DOMContentLoaded', function() {
+      new_task_modal.showModal();
+    });
+  <% end %>
+</script>

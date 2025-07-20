@@ -16,7 +16,9 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to tasks_path, notice: "Task was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      # For modal submissions, we need to render the index page with errors
+      @tasks = Task.order(created_at: :desc)
+      render :index, status: :unprocessable_entity
     end
   end
 
