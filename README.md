@@ -10,7 +10,31 @@
 
 A modern, responsive todo list application built with Ruby on Rails, featuring a beautiful UI with Tailwind CSS and DaisyUI components.
 
-[🚀 Live Demo](#) • [📖 Documentation](#features) • [🛠️ Setup](#getting-started)
+[📸 Screenshots](#screenshots) • [📖 Documentation](#features) • [🛠️ Setup](#getting-started)
+
+</div>
+
+---
+
+## 📸 Screenshots
+
+<div align="center">
+
+### 🏠 Landing Page
+![Landing Page](screenshots/LandingPage.png)
+*Clean and modern landing page with navigation and theme switcher*
+
+### 📋 Tasks Overview (Light Theme)
+![Tasks Overview](screenshots/Tasks.png)
+*Main tasks interface showing task cards with priorities, due dates, and actions*
+
+### 🌙 Tasks Overview (Dark Theme)
+![Tasks Dark Theme](screenshots/Tasks_Dark.png)
+*Same interface in dark theme, showcasing the beautiful theme system*
+
+### ➕ New Task Modal
+![New Task Modal](screenshots/New_Task.png)
+*Clean modal interface for creating new tasks with form validation*
 
 </div>
 
@@ -23,6 +47,7 @@ A modern, responsive todo list application built with Ruby on Rails, featuring a
 - **Theme Support**: 30+ beautiful themes including Light, Dark, Cyberpunk, Synthwave, and more
 - **Responsive Layout**: Works perfectly on desktop, tablet, and mobile devices
 - **Smooth Animations**: Enhanced user experience with subtle animations
+- **Visual Appeal**: See the beautiful interface in the [screenshots section](#screenshots) above
 
 ### 📋 **Task Management**
 - **Create Tasks**: Add new tasks with title, description, priority, and due date
@@ -81,6 +106,8 @@ A modern, responsive todo list application built with Ruby on Rails, featuring a
 
 5. **Visit the application**
    Open [http://localhost:3000](http://localhost:3000) in your browser
+
+> 💡 **Preview**: Check out the [screenshots section](#screenshots) above to see what the application looks like!
 
 ---
 
