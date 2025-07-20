@@ -35,7 +35,6 @@ A modern, responsive todo list application built with Ruby on Rails, featuring a
 - **Real-time Updates**: Turbo Drive for fast, SPA-like navigation
 - **Modal Forms**: Clean modal interface for creating new tasks
 - **Form Validation**: Client and server-side validation with error handling
-- **Search & Filter**: Easy task management with visual indicators
 - **PWA Ready**: Progressive Web App support with service worker
 
 ### 🎯 **Developer Experience**
@@ -276,7 +275,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues**: [GitHub Issues](https://github.com/yourusername/todo_list/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/yourusername/todo_list/discussions)
-- **Email**: your.email@example.com
+- **Email**: shehabelkhaligy@gmail.com
 
 ---
 
