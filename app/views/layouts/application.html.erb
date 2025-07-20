@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html data-theme="light">
 <html>
   <head>
     <title><%= content_for(:title) || "Todo List" %></title>
@@ -19,6 +19,11 @@
   </head>
 
   <body>
+    <!-- Theme Switcher - Fixed Position -->
+    <div class="fixed top-4 right-4 z-50">
+      <%= render 'shared/theme_switcher' %>
+    </div>
+    
     <%= yield %>
   </body>
 </html>

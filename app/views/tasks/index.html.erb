@@ -1,0 +1,53 @@
+<div class="container mx-auto px-15 py-20">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Your Tasks</h1>
+    <%= link_to 'New Task', new_task_path, class: 'btn btn-primary' %>
+  </div>
+
+  <% if @tasks.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @tasks.each do |task| %>
+        <div class="card bg-base-200 shadow-xl">
+          <div class="card-body">
+            <div class="flex items-center justify-between mb-2">
+              <h2 class="card-title <%= 'line-through text-base-content/50' if task.completed? %>">
+                <%= task.title %>
+              </h2>
+              <span class="badge badge-<%= task.priority_color %>">
+                <%= task.priority %>
+              </span>
+            </div>
+            <% if task.description.present? %>
+              <p class="mb-2 <%= 'line-through text-base-content/50' if task.completed? %>"><%= task.description %></p>
+            <% end %>
+            <div class="flex flex-wrap gap-2 items-center mb-2">
+              <% if task.due_date.present? %>
+                <span class="badge <%= task.overdue? ? 'badge-error' : 'badge-outline' %>">
+                  Due: <%= task.due_date.strftime('%b %d, %Y') %>
+                </span>
+              <% end %>
+              <% if task.completed? %>
+                <span class="badge badge-success">Completed</span>
+              <% end %>
+            </div>
+            <div class="card-actions justify-end gap-2">
+              <% unless task.completed? %>
+                <%= button_to 'Mark Complete', task_path(task, task: { completed: true}), method: :patch, class: 'btn btn-success btn-sm' %>
+              <% else %>
+                <%= button_to 'Mark Incomplete', task_path(task, task: { completed: false }), method: :patch, class: 'btn btn-warning btn-sm' %>
+              <% end %>
+              <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-outline btn-sm' %>
+              <%= button_to 'Delete', task_path(task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn btn-error btn-sm' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-info shadow-lg">
+      <div>
+        <span>No tasks yet. Start by creating a new one!</span>
+      </div>
+    </div>
+  <% end %>
+</div>
