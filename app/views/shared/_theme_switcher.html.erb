@@ -46,8 +46,8 @@
 </div>
 
 <script>
-  // Theme controller functionality
-  document.addEventListener('DOMContentLoaded', function() {
+  // Theme controller functionality - works with Turbo Drive
+  function initializeThemeSwitcher() {
     const themeControllers = document.querySelectorAll('.theme-controller');
     const currentThemeSpan = document.getElementById('current-theme');
     
@@ -60,21 +60,40 @@
       }
     }
     
+    // Remove existing event listeners to prevent duplicates
     themeControllers.forEach(controller => {
-      controller.addEventListener('change', function() {
+      controller.removeEventListener('change', controller.themeChangeHandler);
+      
+      // Create and store the event handler
+      controller.themeChangeHandler = function() {
         if (this.checked) {
           const themeValue = this.value;
           document.documentElement.setAttribute('data-theme', themeValue);
           localStorage.setItem('theme', themeValue);
           updateThemeDisplay(themeValue);
         }
-      });
+      };
+      
+      controller.addEventListener('change', controller.themeChangeHandler);
     });
     
     // Load saved theme or default to light
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    document.querySelector(`input[value="${savedTheme}"]`).checked = true;
+    
+    // Find and check the correct radio button
+    const correctRadio = document.querySelector(`input[value="${savedTheme}"]`);
+    if (correctRadio) {
+      correctRadio.checked = true;
+    }
+    
     updateThemeDisplay(savedTheme);
-  });
+  }
+  
+  // Initialize on DOMContentLoaded (first page load)
+  document.addEventListener('DOMContentLoaded', initializeThemeSwitcher);
+  
+  // Initialize on Turbo navigation (for SPA-like behavior)
+  document.addEventListener('turbo:load', initializeThemeSwitcher);
+  document.addEventListener('turbo:render', initializeThemeSwitcher);
 </script> 
