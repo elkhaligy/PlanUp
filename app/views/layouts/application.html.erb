@@ -29,7 +29,7 @@
 
   <body>
     <!-- Navigation Bar -->
-    <div class="navbar bg-base-100 shadow-lg">
+    <div class="navbar bg-base-100">
       <div class="navbar-start">
         <div class="dropdown">
           <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -38,8 +38,8 @@
             </svg>
           </div>
           <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            <li><%= link_to 'Home', root_path %></li>
-            <li><%= link_to 'Tasks', tasks_path %></li>
+            <li><%= link_to 'Home', root_path, class: active_link?('home', 'index') ? 'bg-primary text-primary-content' : '' %></li>
+            <li><%= link_to 'Tasks', tasks_path, class: active_link?('tasks') ? 'bg-primary text-primary-content' : '' %></li>
           </ul>
         </div>
         <%= link_to root_path, class: "btn btn-ghost text-xl" do %>
@@ -52,8 +52,8 @@
       
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
-          <li><%= link_to 'Home', root_path, class: "link link-hover" %></li>
-          <li><%= link_to 'Tasks', tasks_path, class: "link link-hover" %></li>
+          <li><%= link_to 'Home', root_path, class: active_link?('home', 'index') ? 'bg-primary text-primary-content' : 'link link-hover' %></li>
+          <li><%= link_to 'Tasks', tasks_path, class: active_link?('tasks') ? 'bg-primary text-primary-content' : 'link link-hover' %></li>
         </ul>
       </div>
       
