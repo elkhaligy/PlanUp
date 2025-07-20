@@ -17,10 +17,19 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     
+    <script>
+      // Turbo debugging - remove this after investigation
+      document.addEventListener('turbo:before-fetch-request', function(event) {
+        console.log('Turbo request to:', event.detail.url);
+        console.log('Request method:', event.detail.fetchOptions.method);
+        console.log('Stack trace:', new Error().stack);
+      });
+    </script>
+    
     <style>
       /* Always show scrollbar to prevent layout shifts */
       html {
-        scrollbar-gutter: stable;
+        scrollbar-gutter: auto !important;
       }
       
 

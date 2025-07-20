@@ -29,11 +29,6 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
 
-    puts "=== DEBUG INFO ==="
-    puts "params: #{params.inspect}"
-    puts "task_params: #{task_params}"
-    puts "=================="
-
     if @task.update(task_params)
       redirect_to tasks_path, notice: "Task was successfully updated."
     else
