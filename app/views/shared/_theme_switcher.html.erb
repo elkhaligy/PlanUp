@@ -4,6 +4,7 @@
     <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current md:h-5 md:w-5">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
     </svg>
+    <span id="current-theme" class="ml-1 hidden sm:inline">Light</span>
     <svg width="10px" height="10px" class="ml-1 hidden h-2 w-2 fill-current opacity-60 sm:inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
       <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
     </svg>
@@ -48,12 +49,24 @@
   // Theme controller functionality
   document.addEventListener('DOMContentLoaded', function() {
     const themeControllers = document.querySelectorAll('.theme-controller');
+    const currentThemeSpan = document.getElementById('current-theme');
+    
+    // Function to update the displayed theme name
+    function updateThemeDisplay(themeName) {
+      if (currentThemeSpan) {
+        // Capitalize first letter
+        const displayName = themeName.charAt(0).toUpperCase() + themeName.slice(1);
+        currentThemeSpan.textContent = displayName;
+      }
+    }
     
     themeControllers.forEach(controller => {
       controller.addEventListener('change', function() {
         if (this.checked) {
-          document.documentElement.setAttribute('data-theme', this.value);
-          localStorage.setItem('theme', this.value);
+          const themeValue = this.value;
+          document.documentElement.setAttribute('data-theme', themeValue);
+          localStorage.setItem('theme', themeValue);
+          updateThemeDisplay(themeValue);
         }
       });
     });
@@ -62,5 +75,6 @@
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     document.querySelector(`input[value="${savedTheme}"]`).checked = true;
+    updateThemeDisplay(savedTheme);
   });
 </script> 
